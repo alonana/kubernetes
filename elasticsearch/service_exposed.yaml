@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: elasticsearch-service-exposed
+  labels:
+    configid: elasticsearch-service-exposed
+spec:
+  selector:
+    configid: elasticsearch-container
+  type: NodePort
+  ports:
+    - port: 9200
+      targetPort: 9200
+      nodePort: 30002
+      protocol: TCP
+      name: elasticsearch-exposed
