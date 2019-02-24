@@ -37,7 +37,12 @@ spec:
             privileged: true
       containers:
         - name: elasticsearch
-          image: docker.elastic.co/elasticsearch/elasticsearch:6.6.1
+          image: alonana/elasticsearch:1.0.0
+          securityContext:
+            capabilities:
+              add:
+                - IPC_LOCK
+                - SYS_RESOURCE
           env:
             - name: cluster.name
               value: "elasticsearch"
@@ -46,9 +51,11 @@ spec:
             - name: ES_JAVA_OPTS
               value: "-Xms256m -Xmx256m"
             - name: discovery.zen.ping.unicast.hosts
-              value: "elasticsearch-internal"
+              value: "elasticsearch-service-internal"
           ports:
             - containerPort: 9200
               name: es-exposed
             - containerPort: 9300
               name: es-internal
+
+
