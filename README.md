@@ -1,4 +1,10 @@
-
+#Open Issues
+- Persistence store for ElasticSearch - decide on a method
+- Production ready configuration for ElasticSearch
+- ElasticSearch service is exposed in all pods??? security issue!
+- Deploy LogStash
+- Create controller in GO that push data into LogStash 
+- Create client that pushes data into the controller 
 
 #ElasticSearch
 
@@ -15,8 +21,8 @@ This means that kubernetes manages endpoints and DNS, but does not supply a stab
 
 Install 
 ```
-kubectl apply -f deployment.yaml
-kubectl apply -f service.yaml
+kubectl apply -f nginx/service.yaml
+kubectl apply -f nginx/deployment.yaml
 ```
 
 Check status 
