@@ -4,6 +4,10 @@ set -x
 
 cd "$(dirname "$0")"
 
+echo "ElasticSearch data cleanup"
+KUBE_IP=`sudo minikube ip`
+curl -XDELETE "http://${KUBE_IP}:30002/mydata*"
+
 echo "Logstash cleanup"
 kubectl delete configmap logstash-pipeline
 kubectl delete -f ./logstash/service.yaml
