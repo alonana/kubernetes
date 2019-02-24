@@ -57,5 +57,22 @@ spec:
               name: es-exposed
             - containerPort: 9300
               name: es-internal
-
+          readinessProbe:
+            initialDelaySeconds: 60
+            timeoutSeconds: 6
+            failureThreshold: 20
+            successThreshold: 1
+            httpGet:
+              path: /
+              port: 9200
+              scheme: HTTP
+          livenessProbe:
+            timeoutSeconds: 6
+            failureThreshold: 10
+            successThreshold: 1
+            initialDelaySeconds: 60
+            httpGet:
+              path: /_cluster/health
+              port: 9200
+              scheme: HTTP
 

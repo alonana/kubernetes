@@ -2,7 +2,6 @@
 - Persistence store for ElasticSearch - decide on a method
 - Production ready configuration for ElasticSearch
 - ElasticSearch service is exposed in all pods??? security issue!
-- Deploy LogStash
 - Create controller in GO that push data into LogStash 
 - Create client that pushes data into the controller 
 
