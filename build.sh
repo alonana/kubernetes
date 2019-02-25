@@ -35,6 +35,14 @@ kubectl create -f ./fluentbit/fluent-bit-configmap.yaml
 # kubectl create -f ./fluentbit/fluent-bit-ds.yaml
 kubectl create -f ./fluentbit/fluent-bit-ds-minikube.yaml
 
+echo "Envoy Build"
+./envoy/docker/build.sh
+
+echo "Envoy Deploy"
+kubectl create -f ./envoy/service.yaml
+kubectl create -f ./envoy/deployment.yaml
+
+
 echo "Send data to Logstash"
 KUBE_IP=`sudo minikube ip`
 curl -H "content-type: application/json" -XPUT "http://${KUBE_IP}:30003/data" -d '{
@@ -49,4 +57,7 @@ echo "Check data in ElasticSearch"
 curl -XGET "http://${KUBE_IP}:30002/_cat/indices?v&pretty"
 curl -XGET "http://${KUBE_IP}:30002/mydata-*/_search?size=1000&q=*:*&pretty"
 curl -XGET "http://${KUBE_IP}:30002/logstash*/_search?size=1000&q=*:*&pretty"
+
+echo "Check envoy"
+curl -XGET "http://${KUBE_IP}:30004"
 

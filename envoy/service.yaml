@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: envoy-service
+  labels:
+    configid: envoy-service
+spec:
+  selector:
+    configid: envoy-container
+  type: NodePort
+  ports:
+    - port: 10000
+      targetPort: 10000
+      nodePort: 30004
+      protocol: TCP
+      name: envoy-in

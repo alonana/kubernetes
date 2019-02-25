@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: envoy-deployment
+  labels:
+    configid: envoy-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      configid: envoy-container
+  template:
+    metadata:
+      labels:
+        configid: envoy-container
+    spec:
+      containers:
+        - name: envoy
+          image: alonana/envoy:1.0.0
+          ports:
+            - containerPort: 10000
+              name: envoy-in

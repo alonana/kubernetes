@@ -26,6 +26,10 @@ kubectl delete -f ./elasticsearch/service_internal.yaml
 kubectl delete -f ./elasticsearch/service_exposed.yaml
 kubectl delete -f ./elasticsearch/deployment.yaml
 
+echo "Envoy cleanup"
+kubectl delete -f ./envoy/service.yaml
+kubectl delete -f ./envoy/deployment.yaml
+
 echo "Minikube cleanup"
 sudo minikube delete
 
