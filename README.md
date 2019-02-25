@@ -15,6 +15,9 @@ Ports:
 clusterIP=None --> headless service
 This means that kubernetes manages endpoints and DNS, but does not supply a stable cluster IP
 
+#FluentBit
+Send to logstash:
+https://docs.fluentbit.io/tutorials/ship_to/logstash
 
 # NGINX
 

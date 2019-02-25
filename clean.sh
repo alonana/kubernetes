@@ -7,6 +7,14 @@ cd "$(dirname "$0")"
 echo "ElasticSearch data cleanup"
 KUBE_IP=`sudo minikube ip`
 curl -XDELETE "http://${KUBE_IP}:30002/mydata*"
+curl -XDELETE "http://${KUBE_IP}:30002/logstash*"
+
+echo "Fluent Bit cleanup"
+kubectl delete -f ./fluentbit/fluent-bit-ds-minikube.yaml
+kubectl delete -f ./fluentbit/fluent-bit-configmap.yaml
+kubectl delete -f ./fluentbit/fluent-bit-role-binding.yaml
+kubectl delete -f ./fluentbit/fluent-bit-role.yaml
+kubectl delete -f ./fluentbit/fluent-bit-service-account.yaml
 
 echo "Logstash cleanup"
 kubectl delete configmap logstash-pipeline

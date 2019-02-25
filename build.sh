@@ -25,6 +25,15 @@ kubectl create configmap logstash-pipeline --from-file=./logstash/pipeline.conf
 kubectl create -f ./logstash/service.yaml
 kubectl create -f ./logstash/deployment.yaml
 
+echo "Fluent Bit Deploy"
+# see https://docs.fluentbit.io/manual/installation/kubernetes
+kubectl create -f ./fluentbit/fluent-bit-service-account.yaml
+kubectl create -f ./fluentbit/fluent-bit-role.yaml
+kubectl create -f ./fluentbit/fluent-bit-role-binding.yaml
+kubectl create -f ./fluentbit/fluent-bit-configmap.yaml
+# this is for minikube, for regular kubernetes cluster, use:
+# kubectl create -f ./fluentbit/fluent-bit-ds.yaml
+kubectl create -f ./fluentbit/fluent-bit-ds-minikube.yaml
 
 echo "Send data to Logstash"
 KUBE_IP=`sudo minikube ip`
@@ -39,4 +48,5 @@ curl -H "content-type: application/json" -XPUT "http://${KUBE_IP}:30003/data" -d
 echo "Check data in ElasticSearch"
 curl -XGET "http://${KUBE_IP}:30002/_cat/indices?v&pretty"
 curl -XGET "http://${KUBE_IP}:30002/mydata-*/_search?size=1000&q=*:*&pretty"
+curl -XGET "http://${KUBE_IP}:30002/logstash*/_search?size=1000&q=*:*&pretty"
 
