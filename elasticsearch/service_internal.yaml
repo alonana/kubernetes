@@ -9,6 +9,7 @@ spec:
     configid: elasticsearch-container
   type: ClusterIP
   clusterIP: None
+  publishNotReadyAddresses: true
   ports:
     - name: elasticsearch-internal
       port: 9300
