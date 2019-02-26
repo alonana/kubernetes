@@ -35,6 +35,15 @@ kubectl create -f ./fluentbit/fluent-bit-configmap.yaml
 # kubectl create -f ./fluentbit/fluent-bit-ds.yaml
 kubectl create -f ./fluentbit/fluent-bit-ds-minikube.yaml
 
+echo "Filebeat Deploy"
+kubectl create -f ./filebeat/filebeat-service-account.yaml
+kubectl create -f ./filebeat/filebeat-cluster-role.yaml
+kubectl create -f ./filebeat/filebeat-cluster-role-binding.yaml
+kubectl create -f ./filebeat/filebeat-config.yaml
+kubectl create -f ./filebeat/filebeat-inputs.yaml
+kubectl create -f ./filebeat/filebeat-daemon.yaml
+
+
 echo "Envoy Build"
 ./envoy/docker/build.sh
 

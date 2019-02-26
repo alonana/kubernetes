@@ -13,4 +13,8 @@ spec:
       targetPort: 9600
       nodePort: 30003
       protocol: TCP
-      name: logstash-in
+      name: logstash-http
+    - port: 5044
+      targetPort: 5044
+      protocol: TCP
+      name: logstash-beat
