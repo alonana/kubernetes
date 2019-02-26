@@ -7,13 +7,7 @@ KUBE_IP=`sudo minikube ip`
 curl -XDELETE "http://${KUBE_IP}:30002/mydata*"
 curl -XDELETE "http://${KUBE_IP}:30002/fluentbit*"
 
-./fluentbit/clean.sh
-./filebeat/clean.sh
-./logstash/clean.sh
-./envoy/clean.sh
-./elasticsearch/clean.sh
-./nginx//clean.sh
-
-echo "Minikube cleanup"
-#sudo minikube delete
-
+echo "ElasticSearch cleanup"
+kubectl delete -f ./k8s/service_internal.yaml
+kubectl delete -f ./k8s/service_exposed.yaml
+kubectl delete -f ./k8s/deployment.yaml
