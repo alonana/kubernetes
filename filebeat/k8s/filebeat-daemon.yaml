@@ -32,12 +32,9 @@ spec:
               mountPath: /etc/filebeat.yml
               readOnly: true
               subPath: filebeat.yml
-            - name: inputs
-              mountPath: /usr/share/filebeat/inputs.d
-              readOnly: true
-            - name: data
+            - name: data-volume
               mountPath: /usr/share/filebeat/data
-            - name: varlibdockercontainers
+            - name: varlibdockercontainers-volume
               mountPath: /var/lib/docker/containers
               readOnly: true
       volumes:
@@ -45,14 +42,10 @@ spec:
           configMap:
             defaultMode: 0600
             name: filebeat-config
-        - name: varlibdockercontainers
+        - name: varlibdockercontainers-volume
           hostPath:
             path: /var/lib/docker/containers
-        - name: inputs
-          configMap:
-            defaultMode: 0600
-            name: filebeat-inputs
-        - name: data
+        - name: data-volume
           hostPath:
             path: /var/lib/filebeat-data
             type: DirectoryOrCreate

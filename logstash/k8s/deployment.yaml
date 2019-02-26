@@ -23,7 +23,7 @@ spec:
             - containerPort: 5044
               name: logstash-beat
           readinessProbe:
-            initialDelaySeconds: 30
+            initialDelaySeconds: 10
             timeoutSeconds: 6
             failureThreshold: 20
             successThreshold: 1

@@ -25,10 +25,7 @@ curl -H "content-type: application/json" -XPUT "http://${KUBE_IP}:30003/data" -d
 }'
 
 
-echo "Check data in ElasticSearch"
-curl -XGET "http://${KUBE_IP}:30002/_cat/indices?v&pretty"
-curl -XGET "http://${KUBE_IP}:30002/mydata-*/_search?size=1000&q=*:*&pretty"
-curl -XGET "http://${KUBE_IP}:30002/fluentbit*/_search?size=1000&q=*:*&pretty"
+./elasticsearch/data_fetch.sh
 
 echo "Check Envoy"
 curl -XGET "http://${KUBE_IP}:30004"
