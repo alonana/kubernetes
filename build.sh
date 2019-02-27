@@ -2,16 +2,18 @@
 
 cd "$(dirname "$0")"
 
+mode=$1
+
 echo "Minikube setup"
 #sudo minikube start --memory 4096
 eval $(sudo minikube docker-env)
 sudo minikube status
 
 ./elasticsearch/build.sh
-./logstash/build.sh
-#./fluentbit/build.sh
+./logstash/build.sh $mode
 ./filebeat/build.sh
 ./envoy/build.sh
+#./fluentbit/build.sh
 #./nginx/build.sh
 
 

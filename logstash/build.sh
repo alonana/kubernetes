@@ -2,8 +2,13 @@
 
 cd "$(dirname "$0")"
 
+mode=$1
+
 echo "Logstash Build"
-./docker/build.sh
+
+if [[ "${mode}" == "full" ]]; then
+    ./docker/build.sh
+fi
 
 echo "Logstash Deploy"
 kubectl create configmap logstash-pipeline --from-file=./pipeline.conf
