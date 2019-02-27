@@ -1,0 +1,14 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: es-persistent-volume-claim
+spec:
+  storageClassName: manual
+  selector:
+    matchLabels:
+      configid: es-persistent-volume
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Mi
