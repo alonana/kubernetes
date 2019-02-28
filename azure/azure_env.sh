@@ -2,8 +2,8 @@
 
 export AK8S_USE_MINIKUBE=false
 
-[ -z "${azureRegistryName}" ] && echo "Missing azureRegistryName" && exit
-[ -z "${azureRegistryFqdn}" ] && echo "Missing azureRegistryFqdn" && exit
+[ -z "${azureRegistryName}" ] && echo -e "need to run:\nexport azureRegistryName=X" && exit
+[ -z "${azureRegistryFqdn}" ] && echo -e "need to run:\nexport azureRegistryFqdn=X" && exit
 
 
 export AK8S_DOCKER_REPOSITORY=${azureRegistryFqdn}

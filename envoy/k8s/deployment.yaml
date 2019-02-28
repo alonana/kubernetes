@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: envoy
-          image: alonana/envoy:1.0.0
+          image: AK8S_DOCKER_REPOSITORY/envoy:1.0.0
           ports:
             - containerPort: 10000
               name: envoy-in

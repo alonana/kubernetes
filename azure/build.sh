@@ -9,6 +9,8 @@ source ../set_env.sh
 
 ../build_all.sh
 
+echo "Pushing to Azure container registry"
+
 az acr login --name ${azureRegistryName}
 
 docker tag alonana/elasticsearch:1.0.0 ${azureRegistryFqdn}/elasticsearch:1.0.0
