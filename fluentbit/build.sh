@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 cd "$(dirname "$0")"
+source ../set_env.sh
 
 echo "Fluent Bit Deploy"
 # see https://docs.fluentbit.io/manual/installation/kubernetes

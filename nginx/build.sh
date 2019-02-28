@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 cd "$(dirname "$0")"
+source ../set_env.sh
 
 echo "NGINX Deploy"
 kubectl create -f ./k8s/stateless/service.yaml

@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 cd "$(dirname "$0")"
+source ./../set_env.sh
 
 echo "ElasticSearch data cleanup"
-KUBE_IP=`sudo minikube ip`
-curl -XDELETE "http://${KUBE_IP}:30002/mydata*"
-curl -XDELETE "http://${KUBE_IP}:30002/fluentbit*"
+curl -XDELETE "http://${AK8S_KUBE_IP}:30002/mydata*"
+curl -XDELETE "http://${AK8S_KUBE_IP}:30002/fluentbit*"

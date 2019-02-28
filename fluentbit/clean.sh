@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 cd "$(dirname "$0")"
+source ../set_env.sh
 
 echo "Fluent Bit cleanup"
 kubectl delete -f ./k8s/fluent-bit-ds-minikube.yaml

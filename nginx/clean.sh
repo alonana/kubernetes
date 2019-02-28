@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 cd "$(dirname "$0")"
+source ../set_env.sh
 
 echo "NGINX cleanup"
 kubectl delete -f ./k8s/stateless/service.yaml

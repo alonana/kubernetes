@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 
 cd "$(dirname "$0")"
+source ../set_env.sh
 
 echo "Envoy Build"
 ./docker/build.sh
 
 echo "Envoy Deploy"
 kubectl create -f ./k8s/service.yaml
-kubectl create -f ./k8s/deployment.yaml
+cat ./k8s/deployment.yaml | sed "s/AK8S_DOCKER_REPOSITORY/${AK8S_DOCKER_REPOSITORY}/g" | kubectl create -f -
