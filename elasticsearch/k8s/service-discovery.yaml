@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: elasticsearch-service-internal
+  name: elasticsearch-service-discovery
   labels:
-    configid: elasticsearch-service-internal
+    configid: elasticsearch-service-discovery
 spec:
   selector:
     configid: elasticsearch-container
@@ -11,7 +11,7 @@ spec:
   clusterIP: None
   publishNotReadyAddresses: true
   ports:
-    - name: elasticsearch-internal
+    - name: elasticsearch-discovery
       port: 9300
       targetPort: 9300
       protocol: TCP

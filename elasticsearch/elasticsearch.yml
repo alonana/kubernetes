@@ -1,0 +1,3 @@
+cluster.name: "elasticsearch"
+network.host: 0.0.0.0
+node.max_local_storage_nodes: 10

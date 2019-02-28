@@ -2,5 +2,7 @@
 
 cd "$(dirname "$0")"
 
+mode=$1
+
 ./clean.sh
-./build.sh
+./build.sh ${mode}

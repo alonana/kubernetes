@@ -5,7 +5,7 @@ metadata:
   labels:
     configid: elasticsearch-deployment
 spec:
-  serviceName: "elasticsearch-service-internal"
+  serviceName: "elasticsearch-service-discovery"
   replicas: 3
   selector:
     matchLabels:
@@ -58,8 +58,6 @@ spec:
                 - IPC_LOCK
                 - SYS_RESOURCE
           env:
-            - name: cluster.name
-              value: "elasticsearch"
             - name: node.name
               valueFrom:
                 fieldRef:
@@ -69,12 +67,12 @@ spec:
             - name: ES_JAVA_OPTS
               value: "-Xms256m -Xmx256m"
             - name: discovery.zen.ping.unicast.hosts
-              value: "elasticsearch-service-internal"
+              value: "elasticsearch-service-discovery"
           ports:
             - containerPort: 9200
               name: es-exposed
             - containerPort: 9300
-              name: es-internal
+              name: es-discovery
           readinessProbe:
             initialDelaySeconds: 60
             timeoutSeconds: 6
@@ -96,7 +94,13 @@ spec:
           volumeMounts:
             - name: es-stateful-volume
               mountPath: /usr/share/elasticsearch/data
+            - name: es-config-volume
+              mountPath: /usr/share/elasticsearch/config/elasticsearch.yml
+              subPath: elasticsearch.yml
       volumes:
         - name: es-stateful-volume
           persistentVolumeClaim:
             claimName: es-persistent-volume-claim
+        - name: es-config-volume
+          configMap:
+            name: elastic-config

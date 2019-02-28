@@ -6,7 +6,6 @@ mode=$1
 
 echo "Minikube setup"
 #sudo minikube start --memory 4096
-eval $(sudo minikube docker-env)
 sudo minikube status
 
 ./elasticsearch/build.sh
