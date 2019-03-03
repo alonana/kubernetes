@@ -74,7 +74,7 @@ spec:
             - containerPort: 9300
               name: es-discovery
           readinessProbe:
-            initialDelaySeconds: 60
+            initialDelaySeconds: 30
             timeoutSeconds: 6
             failureThreshold: 20
             successThreshold: 1
@@ -86,7 +86,7 @@ spec:
             timeoutSeconds: 6
             failureThreshold: 10
             successThreshold: 1
-            initialDelaySeconds: 60
+            initialDelaySeconds: 30
             httpGet:
               path: /_cluster/health
               port: 9200
@@ -97,6 +97,17 @@ spec:
             - name: es-config-volume
               mountPath: /usr/share/elasticsearch/config/elasticsearch.yml
               subPath: elasticsearch.yml
+        - name: nginx
+          image: nginx:1.7.9
+          ports:
+            - containerPort: 443
+          volumeMounts:
+            - name: nginx-config-volume
+              mountPath: /etc/nginx/conf.d/
+            - name: nginx-tls-volume
+              mountPath: /etc/nginx/ssl/
+            - name: nginx-auth-volume
+              mountPath: /etc/nginx/auth/
       volumes:
         - name: es-stateful-volume
           persistentVolumeClaim:
@@ -104,3 +115,12 @@ spec:
         - name: es-config-volume
           configMap:
             name: elastic-config
+        - name: nginx-config-volume
+          configMap:
+            name: nginx-config
+        - name: nginx-tls-volume
+          secret:
+            secretName: nginx-tls
+        - name: nginx-auth-volume
+          secret:
+            secretName: nginx-auth

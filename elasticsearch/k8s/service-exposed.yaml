@@ -9,8 +9,8 @@ spec:
     configid: elasticsearch-container
   type: NodePort
   ports:
-    - port: 9200
-      targetPort: 9200
-      nodePort: 30002
+    - port: 443
+      targetPort: 443
+      nodePort: 30001
       protocol: TCP
-      name: elasticsearch-exposed
+      name: es-queries

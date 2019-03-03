@@ -17,6 +17,12 @@ spec:
       containers:
         - name: logstash
           image: AK8S_DOCKER_REPOSITORY/logstash:1.0.0
+          env:
+            - name: ES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: logstash-elastic-secret
+                  key: password
           ports:
             - containerPort: 9600
               name: logstash-http

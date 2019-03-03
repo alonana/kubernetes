@@ -3,10 +3,10 @@
 cd "$(dirname "$0")"
 source ../set_env.sh
 
-echo "ElasticSearch build"
+./nginx/build.sh
 ./docker/build.sh
 
-echo "ElasticSearch Deploy starting"
+echo "ElasticSearch Deploy"
 kubectl create configmap elastic-config --from-file=./elasticsearch.yml
 
 if [[ "${AK8S_USE_MINIKUBE}" == "true" ]]; then
@@ -23,4 +23,3 @@ fi
 kubectl create -f ./k8s/service-discovery.yaml
 kubectl create -f ./k8s/service-exposed.yaml
 cat ./k8s/deployment.yaml | sed "s/AK8S_DOCKER_REPOSITORY/${AK8S_DOCKER_REPOSITORY}/g" | kubectl create -f -
-echo "ElasticSearch Deploy done"

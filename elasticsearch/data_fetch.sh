@@ -8,8 +8,8 @@ LOOP=$1
 
 fetch_once() {
     echo "Check data in ElasticSearch"
-    curl -XGET "http://${AK8S_KUBE_IP}:30002/_cat/indices?v&pretty"
-    curl -XGET "http://${AK8S_KUBE_IP}:30002/mydata-*/_search?size=1000&q=*:*&pretty"
+    curl -XGET -k -u "nginx:${AK8S_ELASTIC_PASSWORD}" "https://${AK8S_KUBE_IP}:30001/mydata-*/_search?size=1000&q=*:*&pretty"
+    curl -XGET -k -u "nginx:${AK8S_ELASTIC_PASSWORD}" "https://${AK8S_KUBE_IP}:30001/_cat/indices?v&pretty"
 }
 
 if [[ "${LOOP}" == "loop" ]]; then

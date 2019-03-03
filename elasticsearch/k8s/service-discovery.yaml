@@ -11,7 +11,7 @@ spec:
   clusterIP: None
   publishNotReadyAddresses: true
   ports:
-    - name: elasticsearch-discovery
+    - name: es-discovery
       port: 9300
       targetPort: 9300
       protocol: TCP
