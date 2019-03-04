@@ -10,6 +10,9 @@ filebeat.inputs:
     - "*"
 
 output.logstash:
-  hosts: ["logstash-service:5044"]
+  hosts: ["logstash-service.default.svc.cluster.local:5044"]
+  ssl.certificate_authorities: ["/etc/securebeat/ca/ca.crt"]
+  ssl.certificate: "/etc/securebeat/client/tls.crt"
+  ssl.key: "/etc/securebeat/client/tls.key"
 
 logging.level: debug

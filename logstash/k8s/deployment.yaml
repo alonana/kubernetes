@@ -49,10 +49,20 @@ spec:
           volumeMounts:
             - name: logstash-volume
               mountPath: /usr/share/logstash/pipeline/
+            - name: securebeat-server-volume
+              mountPath: /etc/securebeat/server
+            - name: securebeat-ca-volume
+              mountPath: /etc/securebeat/ca
       volumes:
         - name: logstash-volume
           configMap:
             name: logstash-pipeline
+        - name: securebeat-ca-volume
+          configMap:
+            name: securebeat-ca-config
+        - name: securebeat-server-volume
+          secret:
+            secretName: securebeat-server-secret
 
 
 

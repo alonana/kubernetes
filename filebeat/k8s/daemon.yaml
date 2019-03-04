@@ -37,6 +37,10 @@ spec:
             - name: varlibdockercontainers-volume
               mountPath: /var/lib/docker/containers
               readOnly: true
+            - name: securebeat-client-volume
+              mountPath: /etc/securebeat/client
+            - name: securebeat-ca-volume
+              mountPath: /etc/securebeat/ca
       volumes:
         - name: config
           configMap:
@@ -49,3 +53,9 @@ spec:
           hostPath:
             path: /var/lib/filebeat-data
             type: DirectoryOrCreate
+        - name: securebeat-ca-volume
+          configMap:
+            name: securebeat-ca-config
+        - name: securebeat-client-volume
+          secret:
+            secretName: securebeat-client-secret

@@ -9,6 +9,7 @@ source ./set_env.sh
 
 
 ./elasticsearch/build.sh
+./securebeat/build.sh
 ./logstash/build.sh
 ./filebeat/build.sh
 ./envoy/build.sh
