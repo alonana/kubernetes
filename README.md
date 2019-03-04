@@ -1,4 +1,3 @@
-
 # Open Issues
 - Persistence store for ElasticSearch - decide on a method
 - Production ready configuration for ElasticSearch
