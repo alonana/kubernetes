@@ -4,10 +4,7 @@ cd "$(dirname "$0")"
 source ./../set_env.sh
 
 ./nginx/clean.sh
-
-echo "ElasticSearch data cleanup"
-curl -XDELETE "http://${AK8S_KUBE_IP}:30002/mydata*"
-curl -XDELETE "http://${AK8S_KUBE_IP}:30002/fluentbit*"
+./data_clean.sh
 
 echo "ElasticSearch cleanup start"
 kubectl delete -f ./k8s/service-discovery.yaml

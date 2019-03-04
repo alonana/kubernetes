@@ -20,3 +20,10 @@ spec:
           ports:
             - containerPort: 10000
               name: envoy-in
+          volumeMounts:
+            - name: envoy-volume
+              mountPath: /etc/envoy/
+      volumes:
+        - name: envoy-volume
+          configMap:
+            name: envoy-config

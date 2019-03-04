@@ -53,7 +53,13 @@ spec:
               mountPath: /etc/securebeat/server
             - name: securebeat-ca-volume
               mountPath: /etc/securebeat/ca
+            - name: logstash-yml-volume
+              mountPath: /usr/share/logstash/config/logstash.yml
+              subPath: logstash.yml
       volumes:
+        - name: logstash-yml-volume
+          configMap:
+            name: logstash-yml-config
         - name: logstash-volume
           configMap:
             name: logstash-pipeline

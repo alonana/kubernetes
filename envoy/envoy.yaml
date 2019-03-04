@@ -24,7 +24,24 @@ static_resources:
                 access_log:
                   - name: envoy.file_access_log
                     config:
-                      path: "/tmp/access.log"
+                      path: "/dev/stdout"
+                      json_format:
+                        ind: "enforcer access"
+                        start_time: "%START_TIME%"
+                        req_method: "%REQ(:METHOD)%"
+                        req_path: "%REQ(X-ENVOY-ORIGINAL-PATH?:PATH)%"
+                        protocol: "%PROTOCOL%"
+                        resp_code: "%RESPONSE_CODE%"
+                        resp_flags: "%RESPONSE_FLAGS%"
+                        bytes_recv: "%BYTES_RECEIVED%"
+                        bytes_sent: "%BYTES_SENT%"
+                        duration: "%DURATION%"
+                        resp_time: "%RESP(X-ENVOY-UPSTREAM-SERVICE-TIME)%"
+                        req_x_forward: "%REQ(X-FORWARDED-FOR)%"
+                        agent: "%REQ(USER-AGENT)%"
+                        req_xid: "%REQ(X-REQUEST-ID)%"
+                        auth: "%REQ(:AUTHORITY)%"
+                        upstream_host: "%UPSTREAM_HOST%"
                 stat_prefix: ingress_http
                 route_config:
                   name: local_route

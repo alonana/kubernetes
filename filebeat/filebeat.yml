@@ -1,13 +1,16 @@
-filebeat.inputs:
-  - type: docker
-
-    include_lines: ['enforcer output']
-#    json.keys_under_root: true
-#    json.add_error_key: true
-#    json.message_key: keykey
-    containers.stream: stdout
-    containers.ids:
-    - "*"
+filebeat.autodiscover:
+  providers:
+    - type: kubernetes
+      templates:
+        - condition:
+            equals:
+              kubernetes.labels.configid: "envoy-container"
+          config:
+            - type: docker
+              include_lines: ['enforcer output','enforcer access']
+              containers.stream: stdout
+              containers.ids:
+                - "*"
 
 output.logstash:
   hosts: ["logstash-service.default.svc.cluster.local:5044"]
