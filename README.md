@@ -35,6 +35,9 @@ The JSON has the following format:
   
 In addition, the [envoy configuration](./envoy/envoy.yaml) 
 is configured to print access log to the STDOUT using a custom JSON formatter.
+Notice that any static content can be added if required, 
+for example check the `ind` column, which has static value in the JSON below.
+This allows signaling of the source of the configuration related service in the access log.
 
 ```
 access_log:
