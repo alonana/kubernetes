@@ -3,8 +3,6 @@
 - Secure ElasticSearch transport protocol (port 9300) using envoy?
 
 # Introduction
-GitHub: https://github.com/alonana/kubernetes
-
 This project includes a collection mechanism for events produced by envoy deployments on a kubernetes cluster.
 
 The envoy container produces 2 types of events:
@@ -18,7 +16,8 @@ The following sections describe each of the pipe's steps.
 
 ## Envoy
 The Envoy container is a kubernetes Pod deployment of a modified envoy docker image.
-The modification includes a script `envoy_wrapper.sh` that starts envoy in the background,
+The modification includes a [script](./envoy/docker/envoy_wrapper.sh) 
+that starts envoy in the background,
 and prints a message to STDOUT every 10 seconds.
 The message format is:
 ```
@@ -34,8 +33,9 @@ The JSON has the following format:
 }
 ```
   
-In addition, the envoy is configured to print access log to the STDOUT using a custom JSON formatter.
-Snippet from `envoy.yaml`:
+In addition, the [envoy configuration](./envoy/envoy.yaml) 
+is configured to print access log to the STDOUT using a custom JSON formatter.
+
 ```
 access_log:
   - name: envoy.file_access_log
@@ -49,11 +49,12 @@ access_log:
         ...
 ```
 
-The envoy container includes the kubernetes label `configid="envoy-container"`, which is later used by FileBeat.
+The [envoy container configuration](./envoy/k8s/deployment.yaml) 
+includes the kubernetes label `configid="envoy-container"`, which is later used by FileBeat.
 
 ## FileBeat
 The filebeat container is deployed as a kubernetes DaemonSet (one per kubernetes node).
-In the `filebeat.yml` it is configured to track kubernetes events, 
+In the [FileBeat configuration](./filebeat/filebeat.yml) it is configured to track kubernetes events, 
 and to detect any container that match the kubernetes labels: `configid="envoy-container"`. 
 A service account, cluster role, and binding are applied on the kubernetes, to allow the filebeat to access kubernetes.
 
@@ -66,14 +67,15 @@ The access to logstash is:
 
 ## Logstash
 The Logstash container is a kubernetes Pod deployment of a modified Logstash docker image.
-The modification is to install a base64 decoded plugin.
+The modification in the [Docker file](./logstash/docker/Dockerfile) 
+is to install a base64 decoded plugin.
 
 In addition, the Logstash service to enable the FileBeat agents to access it.
 The Logstash service exposes 2 ports:
 * 9600 - http port, currently used only for health (live/ready) tests
 * 5044 - the beats protocol, used by the FileBeat
 
-The `pipeline.conf` is the Logstash pipeline handling configuration.
+The [pipeline configuration](./logstash/pipeline.conf) is the Logstash pipeline handling configuration.
 It includes the following steps:
 
 If the message includes `enforcer output`:
@@ -92,9 +94,10 @@ If the message includes `enforcer access`:
 
 ## ElasticSearch
 The ElasticSearch container is a kubernetes StatefulSet deployment of a modified ElasticSearch docker image.
-The modified image is required to run the `ulimit -l unlimited` before running ElasticSearch process.
+The modified [Docker file](./elasticsearch/docker/Dockerfile) 
+is required to run the `ulimit -l unlimited` before running ElasticSearch process.
 
-The ElasticSearch is a StatefulSet deployment, 
+The ElasticSearch is a [StatefulSet deployment](./elasticsearch/k8s/deployment.yaml), 
 which means that the pods are started one after the other, 
 each starting only after the previous one has completed health checks.
 
@@ -106,16 +109,18 @@ An ElasticSearch container that starts, uses the ElasticSearch transport protoco
 Then, it creates a sub folder named by its index, in the data folder.
 
 ## Build and Deploy 
-To build on minikube, run: `build_all.sh`
+To build on minikube, run: [./build_all.sh](./build_all.sh)
 
-To clean all on minikube, run: `clean_all.sh`
+To clean all on minikube, run: [./clean_all.sh](./clean_all.sh)
 
-To run on Azure, see the section below, and the run the `azure/build.sh`   
+To run on Azure, see the section below, and the run the [./azure/build.sh](./azure/build.sh)   
 
-Notice that each component includes the following scripts:
+Notice that each component includes the following build scripts:
 * `build.sh`
 * `clean.sh`
 * `reinstall.sh`
+
+The build scripts are using thge `k8s` sub folder for the k8s configuration files.
 
 In addition, ElasticSearch data can be 
 * [fetched](elasticsearch/data_fetch.sh) 
