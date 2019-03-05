@@ -2,8 +2,6 @@ apiVersion: v1
 kind: Service
 metadata:
   name: envoy-service
-  labels:
-    configid: envoy-service
 spec:
   selector:
     configid: envoy-container
