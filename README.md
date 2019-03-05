@@ -1,3 +1,7 @@
+# Open Issues
+- Production ready configuration for ElasticSearch
+- Secure ElasticSearch transport protocol (port 9300) using envoy?
+
 # Introduction
 GitHub: https://github.com/alonana/kubernetes
 
@@ -90,11 +94,32 @@ If the message includes `enforcer access`:
 The ElasticSearch container is a kubernetes StatefulSet deployment of a modified ElasticSearch docker image.
 The modified image is required to run the `ulimit -l unlimited` before running ElasticSearch process.
 
-## Build and Deploy 
+The ElasticSearch is a StatefulSet deployment, 
+which means that the pods are started one after the other, 
+each starting only after the previous one has completed health checks.
 
-# Open Issues
-- Production ready configuration for ElasticSearch
-- Secure ElasticSearch transport protocol (port 9300) using envoy?
+This is required for maintaining a persistence volume.
+All ElasticSearch container are using the `es-persistent-volume-claim` persistence volume claim.
+In minikube, this is a simple map to `hostPath`, so all containers are mapped to the same folder on the host.
+In Azure, this is a map to `Azure Files` (NFS based) folder.
+An ElasticSearch container that starts, uses the ElasticSearch transport protocol (port 9300) to find its index.
+Then, it creates a sub folder named by its index, in the data folder.
+
+## Build and Deploy 
+To build on minikube, run: `build_all.sh`
+
+To clean all on minikube, run: `clean_all.sh`
+
+To run on Azure, see the section below, and the run the `azure/build.sh`   
+
+Notice that each component includes the following scripts:
+* `build.sh`
+* `clean.sh`
+* `reinstall.sh`
+
+In addition, ElasticSearch data can be 
+* [fetched](elasticsearch/data_fetch.sh) 
+* [cleaned](elasticsearch/data_clean.sh) 
 
 # Azure K8s Integration
 - Create Azure K8s cluster
