@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 cd "$(dirname "$0")"
-source ../../set_env.sh
+source ../set_env.sh
 
 echo "ElasticSearch Proxy cleanup"
 kubectl delete -f ./k8s/deployment.yaml
