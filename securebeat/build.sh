@@ -2,6 +2,7 @@
 
 cd "$(dirname "$0")"
 source ../set_env.sh
+rm -rf target
 mkdir target
 
 echo "CA"

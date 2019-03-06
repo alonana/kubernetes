@@ -9,6 +9,7 @@ source ./set_env.sh
 ./envoy/clean.sh
 ./elasticsearch/clean.sh
 
-#echo "Minikube cleanup"
-#sudo minikube delete
+# echo "Minikube cleanup"
+# sudo minikube delete
+# sudo rm -rf ~/.kube/
 

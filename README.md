@@ -1,5 +1,10 @@
 # Open Issues
-- Production ready configuration for ElasticSearch
+- Production ready configuration for ElasticSearch: 
+
+dedicated master nodes
+
+minimum_master_nodes
+
 - Secure ElasticSearch transport protocol (port 9300) using envoy?
 
 # Introduction
@@ -105,11 +110,10 @@ which means that the pods are started one after the other,
 each starting only after the previous one has completed health checks.
 
 This is required for maintaining a persistence volume.
-All ElasticSearch container are using the `es-persistent-volume-claim` persistence volume claim.
 In minikube, this is a simple map to `hostPath`, so all containers are mapped to the same folder on the host.
-In Azure, this is a map to `Azure Files` (NFS based) folder.
-An ElasticSearch container that starts, uses the ElasticSearch transport protocol (port 9300) to find its index.
-Then, it creates a sub folder named by its index, in the data folder.
+In Azure, this is using `volumeClaimTemplates`.
+Each instance is dynamically allocating an stable name for the persistence volume claim, 
+so the claim is reused upon restart.
 
 ## Build and Deploy 
 To build on minikube, run: [./build_all.sh](./build_all.sh)
@@ -136,11 +140,11 @@ In addition, ElasticSearch data can be
 - Login to Azure using CLI: `az login`
 - Configure `kubectl` to use Azure K8s: 
 ```
-az aks get-credentials --resource-group K8S_RESOUCE_GROUP --name K8S_NAME
+az aks get-credentials --resource-group ${azureResourceGroupName} --name ${azureK8sClusterName}
 ```
 
 ## Grant K8s to access Registry
-- Find K8s principal name using 
+- Find K8s cluster principal name using 
 ```
 az ad sp list --all
 ```
@@ -148,12 +152,12 @@ az ad sp list --all
 Search fo `appId` of the K8s cluster
 - Login to Azure container registry
  ```
- az acr login --name CONTAINER_REGISTRY_NAME
+ az acr login --name ${azureRegistryName}
  ```
 
 - Find Container Registry ID using 
 ```
-az acr show --resource-group REGISTRY_RESOUCE_GROUP --name REGISTRY_NAME --query "id" --output tsv
+az acr show --resource-group ${azureResourceGroupName} --name ${azureRegistryName} --query "id" --output tsv
 ```
 
 - Grant pull permission

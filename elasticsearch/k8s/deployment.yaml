@@ -109,9 +109,6 @@ spec:
             - name: nginx-auth-volume
               mountPath: /etc/nginx/auth/
       volumes:
-        - name: es-stateful-volume
-          persistentVolumeClaim:
-            claimName: es-persistent-volume-claim
         - name: es-config-volume
           configMap:
             name: elastic-config
@@ -124,3 +121,4 @@ spec:
         - name: nginx-auth-volume
           secret:
             secretName: nginx-auth
+

@@ -1,0 +1,9 @@
+  volumeClaimTemplates:
+  - metadata:
+      name: es-stateful-volume
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "es-azure-disk"
+      resources:
+        requests:
+          storage: 20Mi
