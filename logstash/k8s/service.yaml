@@ -9,7 +9,6 @@ spec:
   ports:
     - port: 9600
       targetPort: 9600
-      nodePort: 30003
       protocol: TCP
       name: logstash-http
     - port: 5044

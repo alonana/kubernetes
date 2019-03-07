@@ -7,6 +7,7 @@ source ./set_env.sh
 ./filebeat/clean.sh
 ./logstash/clean.sh
 ./envoy/clean.sh
+./envoy-logrotate/clean.sh
 ./elasticsearch/clean.sh
 
 # echo "Minikube cleanup"

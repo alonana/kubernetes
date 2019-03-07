@@ -18,5 +18,6 @@ fi
 ./logstash/build.sh
 ./filebeat/build.sh
 ./envoy/build.sh
+./envoy-logrotate/build.sh
 
 echo "Build complete"

@@ -3,8 +3,8 @@
 cd "$(dirname "$0")"
 source ../set_env.sh
 
-echo "Envoy Build"
-./docker/build.sh
+./docker/envoy/build.sh
+./docker/logrotate/build.sh
 
 echo "Envoy Deploy"
 kubectl create configmap envoy-config --from-file=./envoy.yaml

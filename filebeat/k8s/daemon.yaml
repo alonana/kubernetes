@@ -41,6 +41,8 @@ spec:
               mountPath: /etc/securebeat/client
             - name: securebeat-ca-volume
               mountPath: /etc/securebeat/ca
+            - name: logs-volume
+              mountPath: /logs
       volumes:
         - name: config
           configMap:
@@ -59,3 +61,6 @@ spec:
         - name: securebeat-client-volume
           secret:
             secretName: securebeat-client-secret
+        - name: logs-volume
+          hostPath:
+            path: /logs
