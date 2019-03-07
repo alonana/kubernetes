@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: envoy-logrotate-deployment
+  labels:
+    configid: envoy-logrotate-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      configid: envoy-logrotate-container
+  template:
+    metadata:
+      labels:
+        configid: envoy-logrotate-container
+    spec:
+      containers:
+        - name: envoy
+          image: alonana/envoy-logrotate:1.0.0
+          ports:
+            - containerPort: 10000
+              name: envoy-in
+          volumeMounts:
+            - name: envoy-volume
+              mountPath: /etc/envoy/
+      volumes:
+        - name: envoy-volume
+          configMap:
+            name: envoy-config

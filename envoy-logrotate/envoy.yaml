@@ -1,0 +1,70 @@
+admin:
+  access_log_path: /tmp/admin_access.log
+  address:
+    socket_address:
+      protocol: TCP
+      address: 127.0.0.1
+      port_value: 9901
+static_resources:
+  listeners:
+    - name: listener_0
+      address:
+        socket_address:
+          protocol: TCP
+          address: 0.0.0.0
+          port_value: 10000
+      filter_chains:
+        - filters:
+            - name: envoy.http_connection_manager
+              config:
+                codec_type: auto
+                add_user_agent: true
+                idle_timeout: 0.840s
+                use_remote_address: true
+                access_log:
+                  - name: envoy.file_access_log
+                    config:
+                      path: "/tmp/access.log"
+                      json_format:
+                        ind: "enforcer access"
+                        start_time: "%START_TIME%"
+                        req_method: "%REQ(:METHOD)%"
+                        req_path: "%REQ(X-ENVOY-ORIGINAL-PATH?:PATH)%"
+                        protocol: "%PROTOCOL%"
+                        resp_code: "%RESPONSE_CODE%"
+                        resp_flags: "%RESPONSE_FLAGS%"
+                        bytes_recv: "%BYTES_RECEIVED%"
+                        bytes_sent: "%BYTES_SENT%"
+                        duration: "%DURATION%"
+                        resp_time: "%RESP(X-ENVOY-UPSTREAM-SERVICE-TIME)%"
+                        req_x_forward: "%REQ(X-FORWARDED-FOR)%"
+                        agent: "%REQ(USER-AGENT)%"
+                        req_xid: "%REQ(X-REQUEST-ID)%"
+                        auth: "%REQ(:AUTHORITY)%"
+                        upstream_host: "%UPSTREAM_HOST%"
+                stat_prefix: ingress_http
+                route_config:
+                  name: local_route
+                  virtual_hosts:
+                    - name: local_service
+                      domains: ["*"]
+                      routes:
+                        - match:
+                            prefix: "/"
+                          route:
+                            host_rewrite: www.google.com
+                            cluster: service_google
+                http_filters:
+                  - name: envoy.router
+  clusters:
+    - name: service_google
+      connect_timeout: 0.25s
+      type: LOGICAL_DNS
+      # Comment out the following line to test on v6 networks
+      dns_lookup_family: V4_ONLY
+      lb_policy: ROUND_ROBIN
+      hosts:
+        - socket_address:
+            address: google.com
+            port_value: 443
+      tls_context: { sni: www.google.com }
