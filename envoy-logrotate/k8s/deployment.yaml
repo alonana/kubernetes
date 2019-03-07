@@ -14,16 +14,27 @@ spec:
       labels:
         configid: envoy-logrotate-container
     spec:
+      shareProcessNamespace: true
       containers:
         - name: envoy
-          image: alonana/envoy-logrotate:1.0.0
+          image: envoyproxy/envoy:latest
           ports:
             - containerPort: 10000
               name: envoy-in
           volumeMounts:
             - name: envoy-volume
               mountPath: /etc/envoy/
+            - name: logs-volume
+              mountPath: /tmp
+        - name: logrotate
+          image: alonana/logrotate:1.0.0
+          volumeMounts:
+            - name: logs-volume
+              mountPath: /tmp
       volumes:
         - name: envoy-volume
           configMap:
             name: envoy-config
+        - name: logs-volume
+          hostPath:
+            path: /tmp/logs
