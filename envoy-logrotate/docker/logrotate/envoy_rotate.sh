@@ -5,6 +5,6 @@ sed -i "s/REPLACE_WITH_HOSTNAME/${HOST}/g" /rotate.conf
 
 while :
 do
-    sleep 1000
+    sleep 60
     logrotate /rotate.conf --verbose
 done
