@@ -25,7 +25,12 @@ else
     cat ./k8s/storage/azure/deployment.yaml_append >> target/deployment.yaml
 fi
 
-kubectl create -f target/deployment.yaml
+
+if [[ "${AK8S_ISTIO_WRAP}" == "true" ]]; then
+    istioctl kube-inject -f  target/deployment.yaml | kubectl create -f -
+else
+    kubectl create -f target/deployment.yaml
+fi
 rm -rf target
 
 kubectl create -f ./k8s/service-discovery.yaml

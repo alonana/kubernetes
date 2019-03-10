@@ -11,6 +11,7 @@ fetch_once() {
     curl -XGET -k -u "nginx:${AK8S_ELASTIC_PASSWORD}" "https://${AK8S_KUBE_IP}:30001/print-*/_search?size=100&q=*:*&pretty"
     curl -XGET -k -u "nginx:${AK8S_ELASTIC_PASSWORD}" "https://${AK8S_KUBE_IP}:30001/access-*/_search?size=100&q=*:*&pretty"
     curl -XGET -k -u "nginx:${AK8S_ELASTIC_PASSWORD}" "https://${AK8S_KUBE_IP}:30001/_cat/indices?v&pretty"
+    curl -XGET -k -u "nginx:${AK8S_ELASTIC_PASSWORD}" "https://${AK8S_KUBE_IP}:30001/_cat/health?v&pretty"
 }
 
 if [[ "${LOOP}" == "loop" ]]; then

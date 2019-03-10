@@ -1,11 +1,9 @@
 # Open Issues
-- Production ready configuration for ElasticSearch: 
+## Production ready configuration for ElasticSearch: 
+dedicated master nodes, minimum_master_nodes
 
-dedicated master nodes
-
-minimum_master_nodes
-
-- Secure ElasticSearch transport protocol (port 9300) using envoy?
+## Secure ElasticSearch transport protocol 
+- [Install istio](https://istio.io/docs/setup/kubernetes/quick-start/) 
 
 # Introduction
 This project includes a collection mechanism for events produced by envoy deployments on a kubernetes cluster.
