@@ -1,10 +1,3 @@
-# Open Issues
-## Production ready configuration for ElasticSearch: 
-dedicated master nodes, minimum_master_nodes
-
-## Secure ElasticSearch transport protocol 
-- [Install istio](https://istio.io/docs/setup/kubernetes/quick-start/) 
-
 # Introduction
 This project includes a collection mechanism for events produced by envoy deployments on a kubernetes cluster.
 
@@ -112,6 +105,21 @@ In minikube, this is a simple map to `hostPath`, so all containers are mapped to
 In Azure, this is using `volumeClaimTemplates`.
 Each instance is dynamically allocating an stable name for the persistence volume claim, 
 so the claim is reused upon restart.
+
+## Open Issue - production ready configuration: 
+dedicated master nodes, minimum_master_nodes
+
+## Partial open issue - secured transport protocol
+Verified by using Istio that we can use Envoy proxy to secure the protocol. 
+- [Install istio](https://istio.io/docs/setup/kubernetes/quick-start/)
+- Apply ElasticSearch transport service related authentication policy and destination rule.
+See the istio related [build script](./istio/build.sh) 
+
+The next step, once we'll decide to take it, it to use envoy without istio, 
+and configure it statically, or dynamically using our own controller.
+See the [actual envoy proxy configuration](./istio/actual_envoy.json), which was dynamically configured by istio.
+
+
 
 ## Build and Deploy 
 To build on minikube, run: [./build_all.sh](./build_all.sh)
