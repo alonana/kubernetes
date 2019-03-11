@@ -34,7 +34,7 @@ spec:
       volumes:
         - name: envoy-volume
           configMap:
-            name: envoy-config
+            name: envoy-logrotate-config
         - name: logs-volume
           hostPath:
             path: /logs
