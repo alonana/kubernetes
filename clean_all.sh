@@ -9,6 +9,7 @@ source ./set_env.sh
 ./envoy/clean.sh
 ./envoy-logrotate/clean.sh
 ./elasticsearch/clean.sh
+./nodejs/clean.sh
 
 # echo "Minikube cleanup"
 # sudo minikube delete

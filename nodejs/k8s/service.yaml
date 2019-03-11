@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodejs-service
+spec:
+  selector:
+    configid: nodejs-container
+  type: NodePort
+  ports:
+    - port: 8080
+      targetPort: 8080
+      nodePort: AK8S_GLOBAL_PORT_NODEJS
+      protocol: TCP
+      name: http

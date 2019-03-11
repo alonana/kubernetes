@@ -2,3 +2,4 @@
 **/local.*
 target
 node_modules
+npm-debug.log

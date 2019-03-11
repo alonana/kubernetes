@@ -8,5 +8,5 @@ source ../set_env.sh
 
 echo "Envoy Deploy"
 kubectl create configmap envoy-logrotate-config --from-file=./envoy.yaml
-kubectl create -f ./k8s/service.yaml
-cat ./k8s/deployment.yaml | sed "s/AK8S_DOCKER_REPOSITORY/${AK8S_DOCKER_REPOSITORY}/g" | kubectl create -f -
+sed "s/AK8S_DOCKER_REPOSITORY/${AK8S_DOCKER_REPOSITORY}/g" ./k8s/deployment.yaml | kubectl create -f -
+sed "s/AK8S_GLOBAL_PORT_ENVOY_LOGROTATE/${AK8S_GLOBAL_PORT_ENVOY_LOGROTATE}/g" ./k8s/service.yaml | kubectl create -f -

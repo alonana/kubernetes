@@ -9,6 +9,6 @@ spec:
   ports:
     - port: 10000
       targetPort: 10000
-      nodePort: 30004
+      nodePort: AK8S_GLOBAL_PORT_ENVOY
       protocol: TCP
       name: envoy-in

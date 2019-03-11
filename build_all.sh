@@ -10,7 +10,6 @@ if [[ "${AK8S_NEW_MINIKUBE}" == "true" ]]; then
     sudo minikube start --memory 4096 --cpus=4
     set +e
     sudo chmod -R 777 ~/.kube/config
-    export AK8S_BUILD_LOGSTASH_DOCKER=true
 fi
 
 ./elasticsearch/build.sh
@@ -19,5 +18,6 @@ fi
 ./filebeat/build.sh
 ./envoy/build.sh
 ./envoy-logrotate/build.sh
+./nodejs/build.sh
 
 echo "Build complete"

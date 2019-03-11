@@ -34,4 +34,4 @@ fi
 rm -rf target
 
 kubectl create -f ./k8s/service-discovery.yaml
-kubectl create -f ./k8s/service-exposed.yaml
+sed "s/AK8S_GLOBAL_PORT_ES/${AK8S_GLOBAL_PORT_ES}/g" ./k8s/service-exposed.yaml | kubectl create -f -

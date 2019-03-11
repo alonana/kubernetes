@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodejs-deployment
+  labels:
+    configid: nodejs-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      configid: nodejs-container
+  template:
+    metadata:
+      labels:
+        configid: nodejs-container
+    spec:
+      containers:
+        - name: nodejs
+          image: AK8S_DOCKER_REPOSITORY/nodejs:1.0.0
+          env:
+            - name: PORT
+              value: "8080"
+            - name: ES_HOST
+              value: "elasticsearch-service-exposed"
+            - name: ES_PORT
+              value: "443"
+            - name: ES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: elasticsearch-password-secret
+                  key: user
+            - name: ES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: elasticsearch-password-secret
+                  key: password
+          ports:
+            - containerPort: 8080
+              name: http
