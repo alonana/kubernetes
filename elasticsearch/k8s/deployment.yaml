@@ -2,8 +2,6 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: elasticsearch-deployment
-  labels:
-    configid: elasticsearch-deployment
 spec:
   serviceName: "elasticsearch-service-discovery"
   replicas: 3

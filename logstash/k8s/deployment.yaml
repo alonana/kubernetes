@@ -2,8 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: logstash-deployment
-  labels:
-    configid: logstash-deployment
 spec:
   replicas: 1
   selector:

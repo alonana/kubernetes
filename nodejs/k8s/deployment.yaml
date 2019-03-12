@@ -2,8 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nodejs-deployment
-  labels:
-    configid: nodejs-deployment
 spec:
   replicas: 1
   selector:

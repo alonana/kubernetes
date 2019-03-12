@@ -2,8 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: envoy-logrotate-deployment
-  labels:
-    configid: envoy-logrotate-deployment
 spec:
   replicas: 1
   selector:

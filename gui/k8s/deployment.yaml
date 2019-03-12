@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gui-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      configid: gui-container
+  template:
+    metadata:
+      labels:
+        configid: gui-container
+    spec:
+      containers:
+        - name: gui
+          image: AK8S_DOCKER_REPOSITORY/gui:1.0.0
+          ports:
+            - containerPort: 8080
+              name: http
