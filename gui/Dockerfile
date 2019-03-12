@@ -1,8 +1,9 @@
 # Stage 1
 FROM node:8 as react-build
 WORKDIR /app
+COPY react/packages.json ./
+RUN yarn install
 COPY react ./
-RUN yarn
 RUN yarn build
 
 # Stage 2 - the production environment

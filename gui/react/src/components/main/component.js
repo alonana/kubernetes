@@ -2,6 +2,34 @@ import './style.css';
 import React from 'react'
 
 export default class Main extends React.Component {
+    renderElement(key, value) {
+        return (
+            <div>
+                <span>{key}={value}</span>
+            </div>
+        );
+    }
+
+    renderRow(row) {
+        const elements = [];
+        Object.keys(row).forEach(k => elements.push(this.renderElement(k, row[k])));
+        return (
+            <div className="row">
+                {elements}
+            </div>
+        );
+    }
+
+    renderRows() {
+        const elements = [];
+        this.props.data.forEach(d => elements.push(this.renderRow(d)));
+        return (
+            <div>
+                {elements}
+            </div>
+        );
+    }
+
     render() {
         return (
             <div>
@@ -17,7 +45,7 @@ export default class Main extends React.Component {
                     Fetch
                 </div>
                 <div>
-                    {this.props.data}
+                    {this.renderRows()}
                 </div>
             </div>
         );

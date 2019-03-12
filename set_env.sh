@@ -9,8 +9,13 @@ fi
 export AK8S_USE_MINIKUBE=${AK8S_USE_MINIKUBE:-true}
 if [[ "${AK8S_USE_MINIKUBE}" == "true" ]]; then
     echo Using minikube as the kubernetes cluster
-    eval $(sudo minikube docker-env)
-    export AK8S_KUBE_IP=`sudo minikube ip`
+    sudo chown -R ${USER} ~/.kube
+    sudo chmod -R 777 ~/.kube
+    if [[ ! -f ~/.kube/docker_env ]]; then
+        sudo minikube docker-env > ~/.kube/docker_env
+        eval $(cat ~/.kube/docker_env)
+    fi
+    export AK8S_KUBE_IP=`grep server ~/.kube/config | cut -d: -f3 | cut -d/ -f3`
 fi
 
 export AK8S_DOCKER_REPOSITORY=${AK8S_DOCKER_REPOSITORY:-alonana}

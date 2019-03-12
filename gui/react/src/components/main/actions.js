@@ -5,7 +5,7 @@ const RECEIVE = "RECEIVE";
 
 function fetchDetails() {
     return (dispatch) => {
-        fetch('/api/events/details',
+        fetch('/api/access/list',
             {
                 method: "post",
                 headers: {

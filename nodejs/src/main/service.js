@@ -4,10 +4,11 @@ const elasticClient = produceElasticClient();
 
 
 module.exports = {
-    health: health,
-    dbPing: dbPing,
-    eventDetails: eventDetails,
-    eventsList: eventsList,
+    health,
+    dbPing,
+    eventDetails,
+    eventsList,
+    accessList,
 };
 
 function produceElasticClient() {
@@ -54,9 +55,17 @@ function dbPing(req, res) {
 }
 
 function eventsList(req, res) {
+    return list(req, res, "print");
+}
+
+function accessList(req, res) {
+    return list(req, res, "access");
+}
+
+function list(req, res, indexName) {
     const list = [];
-    elasticClient.search({
-        index: 'print*',
+    return elasticClient.search({
+        index: `${indexName}*`,
         // q: 'sequence:1'
         body: {
             size: 100,

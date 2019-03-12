@@ -2,7 +2,7 @@ import {types} from "./actions";
 
 const initialState = {
     id: 0,
-    data: "",
+    data: [],
 };
 
 export default function reducer(state = initialState, action) {
@@ -15,7 +15,7 @@ export default function reducer(state = initialState, action) {
         case types.RECEIVE:
             return {
                 ...state,
-                data: JSON.stringify(action.value),
+                data: action.value.list,
             };
 
         default:

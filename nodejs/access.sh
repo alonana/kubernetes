@@ -15,6 +15,10 @@ echo "NodeJS events list"
 curl -XPOST  "http://${AK8S_KUBE_IP}:${AK8S_GLOBAL_PORT_NODEJS}/api/events/list"
 echo -e "\n"
 
+echo "NodeJS access log"
+curl -XPOST  "http://${AK8S_KUBE_IP}:${AK8S_GLOBAL_PORT_NODEJS}/api/access/list"
+echo -e "\n"
+
 echo "NodeJS with parameters"
 curl -XPOST  -H "Content-type: application/json" "http://${AK8S_KUBE_IP}:${AK8S_GLOBAL_PORT_NODEJS}/api/events/details" --data '{"id":1}'
 echo -e "\n"

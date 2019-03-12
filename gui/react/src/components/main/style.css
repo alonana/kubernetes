@@ -3,3 +3,7 @@
     background-color: #282c34;
     color: white;
 }
+
+.row {
+    border: 1px solid black;
+}
