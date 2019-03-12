@@ -7,9 +7,9 @@ function produceRouter() {
     const router = express.Router();
 
     router.get('/', service.health);
-    router.post('/db/ping', service.dbPing);
-    router.post('/events/details', service.eventDetails);
-    router.post('/events/list', service.eventsList);
+    router.post('/api/db/ping', service.dbPing);
+    router.post('/api/events/details', service.eventDetails);
+    router.post('/api/events/list', service.eventsList);
 
     return router;
 }
